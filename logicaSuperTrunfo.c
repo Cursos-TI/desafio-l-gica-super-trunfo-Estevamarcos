@@ -163,6 +163,111 @@ int main() {
             printf("Opção inválida. Por favor, escolha um número entre 1 e 5.\n");
     }
 
+     printf("\n"); // aqui pula-se uma linha
+
+    // === Menu de Atributos ===
+    int opcao1, opcao2;
+    float valor1_carta1 = 0, valor1_carta2 = 0;
+    float valor2_carta1 = 0, valor2_carta2 = 0;
+    float soma1 = 0, soma2 = 0;
+
+    printf("=== SUPER TRUNFO: COMPARAÇÃO AVANÇADA ===\n");
+    printf("Escolha o PRIMEIRO atributo para comparar:\n");
+    printf("1 - População\n");
+    printf("2 - Área\n");
+    printf("3 - PIB\n");
+    printf("4 - Número de Pontos Turísticos\n");
+    printf("5 - Densidade Demográfica (MENOR vence)\n");
+    printf("Digite sua opção: ");
+    scanf("%d", &opcao1);
+
+    if (opcao1 < 1 || opcao1 > 5) {
+        printf("Opção inválida!\n");
+        return 1;
+    }
+
+    // Menu dinâmico para o segundo atributo
+    printf("\nEscolha o SEGUNDO atributo para comparar (diferente do primeiro):\n");
+    for (int i = 1; i <= 5; i++) {
+        if (i == opcao1) continue;
+        switch (i) {
+            case 1: printf("1 - População\n"); break;
+            case 2: printf("2 - Área\n"); break;
+            case 3: printf("3 - PIB\n"); break;
+            case 4: printf("4 - Número de Pontos Turísticos\n"); break;
+            case 5: printf("5 - Densidade Demográfica (MENOR vence)\n"); break;
+        }
+    }
+    printf("Digite sua opção: ");
+    scanf("%d", &opcao2);
+
+    if (opcao2 < 1 || opcao2 > 5 || opcao2 == opcao1) {
+        printf("Opção inválida!\n");
+        return 1;
+    }
+
+    // Função para obter o valor do atributo
+    for (int i = 1; i <= 2; i++) {
+        int atributo = (i == 1) ? opcao1 : opcao2;
+        float *v1 = (i == 1) ? &valor1_carta1 : &valor2_carta1;
+        float *v2 = (i == 1) ? &valor1_carta2 : &valor2_carta2;
+
+        switch (atributo) {
+            case 1: *v1 = populacao1; *v2 = populacao2; break;
+            case 2: *v1 = area1; *v2 = area2; break;
+            case 3: *v1 = PIB1; *v2 = PIB2; break;
+            case 4: *v1 = pontosTuristicos1; *v2 = pontosTuristicos2; break;
+            case 5: *v1 = densidade1; *v2 = densidade2; break;
+        }
+    }
+
+    // Exibição dos dados e comparações
+    printf("\nComparando %s e %s...\n", NomeCidade1, NomeCidade2);
+
+    for (int i = 1; i <= 2; i++) {
+        int atributo = (i == 1) ? opcao1 : opcao2;
+        float v1 = (i == 1) ? valor1_carta1 : valor2_carta1;
+        float v2 = (i == 1) ? valor1_carta2 : valor2_carta2;
+
+        printf("\nAtributo %d: ", atributo);
+        switch (atributo) {
+            case 1: printf("População\n"); break;
+            case 2: printf("Área\n"); break;
+            case 3: printf("PIB\n"); break;
+            case 4: printf("Número de Pontos Turísticos\n"); break;
+            case 5: printf("Densidade Demográfica (MENOR vence)\n"); break;
+        }
+
+        printf("%s: %.2f\n", NomeCidade1, v1);
+        printf("%s: %.2f\n", NomeCidade2, v2);
+
+        // Exibição de quem vence o atributo
+        if (atributo == 5) {
+            printf("Vencedor: %s\n", (v1 < v2) ? NomeCidade1 : (v2 < v1) ? NomeCidade2 : "Empate");
+        } else {
+            printf("Vencedor: %s\n", (v1 > v2) ? NomeCidade1 : (v2 > v1) ? NomeCidade2 : "Empate");
+        }
+    }
+
+    // Soma dos valores (regra especial para densidade: MENOR é melhor)
+    valor1_carta1 = (opcao1 == 5) ? -valor1_carta1 : valor1_carta1;
+    valor2_carta1 = (opcao2 == 5) ? -valor2_carta1 : valor2_carta1;
+    valor1_carta2 = (opcao1 == 5) ? -valor1_carta2 : valor1_carta2;
+    valor2_carta2 = (opcao2 == 5) ? -valor2_carta2 : valor2_carta2;
+
+    soma1 = valor1_carta1 + valor2_carta1;
+    soma2 = valor1_carta2 + valor2_carta2;
+
+    printf("\n=== Resultado Final ===\n");
+    printf("%s - Soma dos Atributos: %.2f\n", NomeCidade1, soma1);
+    printf("%s - Soma dos Atributos: %.2f\n", NomeCidade2, soma2);
+
+    if (soma1 > soma2)
+        printf("Resultado: %s venceu!\n", NomeCidade1);
+    else if (soma2 > soma1)
+        printf("Resultado: %s venceu!\n", NomeCidade2);
+    else
+        printf("Resultado: Empate!\n");
 
 
 
