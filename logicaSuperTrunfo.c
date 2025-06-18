@@ -78,6 +78,8 @@ int main() {
      printf("PIB per Capita: R$%.2f\n", pibPerCapita1 );
      printf("PIB per Capita: R$%.2f\n", pibPerCapita2);
 
+     printf("\n"); // aqui pula-se uma linha
+
     int opcao;
 
     printf("=== SUPER TRUNFO: Comparação de Cidades ===\n");
